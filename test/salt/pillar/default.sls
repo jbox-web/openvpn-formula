@@ -33,6 +33,8 @@ openvpn:
       dev_node: myserver1
 {%- endif %}
       comp_lzo: "yes"
+      # OpenVPN 2.6 with OpenSSL 3 no longer has the static key default, BF-CBC
+      ciphers: [AES-256-CBC]
       ifconfig: 169.254.0.1 169.254.0.2
       log_append: '''{{ log_dir }}myserver1.log'''
       status: '''{{ log_dir }}myserver1-status.log'''
@@ -72,6 +74,7 @@ openvpn:
       dev_node: myclient1
 {%- endif %}
       comp_lzo: "yes"
+      ciphers: [AES-256-CBC]
       pull: false
       tls_client: false
       nobind: false
