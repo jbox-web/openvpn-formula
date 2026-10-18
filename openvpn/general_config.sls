@@ -32,8 +32,11 @@ openvpn_config_dir:
   file.directory:
     - name: {{ map.conf_dir }}
 {%- if not grains['os_family'] == 'Windows' %}
+    # Owned by root: the service user only needs to traverse it. Giving it the
+    # directory let a compromised daemon rename keys/ or server/ and plant its
+    # own CA.
     - mode: 750
-    - user: {{ map.user }}
+    - user: root
     - group: {{ map.group }}
 {%- endif %}
     - require_in:
